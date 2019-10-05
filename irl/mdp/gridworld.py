@@ -240,7 +240,18 @@ class Gridworld(object):
         if sx < sy:
             return 0
         return 1
-
+    
+    def optimal_policy_improving(self, state_int, prob_optimal_policy):
+        
+        sx, sy = self.int_to_point(state_int)
+        optimal_policy = self.optimal_policy_deterministic(state_int)
+        if optimal_policy == 1:
+            worse_policy = 0
+        else:
+            worse_policy = 1
+        
+        return rn.choice([optimal_policy,worse_policy],1,p=[prob_optimal_policy,1-prob_optimal_policy])[0]
+    
     def generate_trajectories(self, n_trajectories, trajectory_length, policy,
                                     random_start=False):
         """
